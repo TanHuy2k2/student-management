@@ -1,4 +1,4 @@
-import { IsString, IsEnum, IsNotEmpty, IsEmail, MinLength, Matches, IsOptional } from 'class-validator';
+import { IsString, IsEnum, IsNotEmpty, IsEmail, MinLength, Matches, IsOptional, IsNumber } from 'class-validator';
 import { Role } from 'src/commons/enums/role.enum';
 
 export class CreateAccountsDto {
@@ -23,4 +23,12 @@ export class CreateAccountsDto {
     @IsEnum(Role)
     @IsOptional()
     roles: Role;
+
+    @IsNumber()
+    @IsOptional()
+    createdBy: number;
+
+    @IsNumber()
+    @IsOptional()
+    updatedBy: number;
 }
