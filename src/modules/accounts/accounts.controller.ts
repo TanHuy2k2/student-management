@@ -1,41 +1,41 @@
 import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post, Req, UploadedFile, UseInterceptors } from '@nestjs/common';
-import { AccountsService } from './accounts.service';
-import { CreateAccountsDto } from './dto/create-accounts.dto';
-import { AccountsInterface } from './interface/accounts.interface';
+import { AccountService } from './accounts.service';
+import { CreateAccountDto } from './dto/create-accounts.dto';
+import { AccountInterface } from './interface/accounts.interface';
 import { UploadImageInterceptor } from 'src/commons/interceptors/upload-image.interceptor';
-import { UpdateAccountsDto } from './dto/update-account.dto';
+import { UpdateAccountDto } from './dto/update-account.dto';
 import { Roles } from 'src/commons/decorators/roles.decorator';
 import { Role } from 'src/commons/enums/role.enum';
 
 @Roles(Role.ADMIN)
 @Controller('accounts')
-export class AccountsController {
+export class AccountController {
     constructor(
-        private accountsService: AccountsService,
+        private accountService: AccountService,
     ) { }
 
     @Get()
     getHello(): string {
-        return this.accountsService.getHello();
+        return this.accountService.getHello();
     }
 
     @UseInterceptors(UploadImageInterceptor('image'))
     @Post('create')
-    async create(@Req() req, @Body() data: CreateAccountsDto, @UploadedFile() file: Express.Multer.File): Promise<AccountsInterface> {
+    async create(@Req() req, @Body() data: CreateAccountDto, @UploadedFile() file: Express.Multer.File): Promise<AccountInterface> {
         const userId = req.user.id;
         data.image = file ? `/uploads/${file.filename}` : '';
-        return this.accountsService.create({ ...data, createdBy: userId, updatedBy: userId });
+        return this.accountService.create({ ...data, createdBy: userId, updatedBy: userId });
     }
 
     @UseInterceptors(UploadImageInterceptor('image'))
     @Patch('update/:id')
-    async update(@Req() req, @Param('id', ParseIntPipe) id: number, @Body() data: UpdateAccountsDto, @UploadedFile() file: Express.Multer.File) {
+    async update(@Req() req, @Param('id', ParseIntPipe) id: number, @Body() data: UpdateAccountDto, @UploadedFile() file: Express.Multer.File) {
         data.image = file ? `/uploads/${file.filename}` : '';
-        return this.accountsService.update(id, { ...data, updatedBy: req.user.id })
+        return this.accountService.update(id, { ...data, updatedBy: req.user.id })
     }
 
     @Delete('delete/:id')
     async delete(@Param('id', ParseIntPipe) id: number) {
-        return this.accountsService.delete(id);
+        return this.accountService.delete(id);
     }
 }

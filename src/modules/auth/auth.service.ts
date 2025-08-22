@@ -1,5 +1,5 @@
 import { ForbiddenException, Inject, Injectable, UnauthorizedException } from '@nestjs/common';
-import { AccountsService } from '../accounts/accounts.service';
+import { AccountService } from '../accounts/accounts.service';
 import * as bcrypt from 'bcrypt';
 import { LoginDto } from './dto/login.dto';
 import { JwtService } from '@nestjs/jwt';
@@ -10,7 +10,7 @@ import { Request } from 'express';
 @Injectable()
 export class AuthService {
     constructor(
-        private accountServive: AccountsService,
+        private accountServive: AccountService,
         private jwtService: JwtService,
         @Inject('REDIS_CLIENT') private readonly redis: Redis,
     ) { }
@@ -95,5 +95,6 @@ export class AuthService {
 
     async logout(userId) {
         await this.redis.del(`session:${userId}`);
+        return { message: 'Logged out' };
     }
 }

@@ -1,9 +1,10 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, OneToOne } from 'typeorm';
 import { AbstractEntity } from './base.entity';
 import { Role } from '../../commons/enums/role.enum';
+import { StudentEntity } from './student.entity';
 
 @Entity({ name: 'accounts' })
-export class AccountsEntity extends AbstractEntity {
+export class AccountEntity extends AbstractEntity {
     @PrimaryGeneratedColumn()
     id: number;
 
@@ -21,4 +22,7 @@ export class AccountsEntity extends AbstractEntity {
 
     @Column({ nullable: true })
     image: string;
+
+    @OneToOne(() => StudentEntity, (student) => student.account)
+    student: StudentEntity;
 }

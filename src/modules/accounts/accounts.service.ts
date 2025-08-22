@@ -1,30 +1,30 @@
 import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
-import { CreateAccountsDto } from './dto/create-accounts.dto';
-import { AccountsInterface } from './interface/accounts.interface';
-import { AccountsEntity } from 'src/database/entities/account.entity';
+import { CreateAccountDto } from './dto/create-accounts.dto';
+import { AccountInterface } from './interface/accounts.interface';
+import { AccountEntity } from 'src/database/entities/account.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { SALT_OF_ROUND } from 'src/constants/constant';
 import * as bcrypt from 'bcrypt';
-import { UpdateAccountsDto } from './dto/update-account.dto';
+import { UpdateAccountDto } from './dto/update-account.dto';
 
 @Injectable()
-export class AccountsService {
+export class AccountService {
     constructor(
-        @InjectRepository(AccountsEntity)
-        private accountsRepository: Repository<AccountsEntity>,
+        @InjectRepository(AccountEntity)
+        private accountsRepository: Repository<AccountEntity>,
     ) { }
 
     getHello(): string {
         return 'Hello account!';
     }
 
-    async findOne(email: string): Promise<AccountsInterface | null> {
+    async findOne(email: string): Promise<AccountInterface | null> {
         const user = await this.accountsRepository.findOneBy({ email })
         return user;
     }
 
-    async create(data: CreateAccountsDto): Promise<AccountsInterface> {
+    async create(data: CreateAccountDto): Promise<AccountInterface> {
         try {
             const existed_user = await this.findOne(data.email);
             if (existed_user) {
@@ -40,7 +40,7 @@ export class AccountsService {
         }
     }
 
-    async update(id: number, data: UpdateAccountsDto): Promise<AccountsInterface> {
+    async update(id: number, data: UpdateAccountDto): Promise<AccountInterface> {
         try {
             const account = await this.accountsRepository.findOne({ where: { id } });
             if (!account) {
