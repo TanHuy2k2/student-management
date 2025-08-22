@@ -1,7 +1,7 @@
 import { IsString, IsEnum, IsNotEmpty, IsEmail, MinLength, Matches, IsOptional, IsNumber } from 'class-validator';
 import { Role } from 'src/commons/enums/role.enum';
 
-export class CreateAccountsDto {
+export class CreateAccountDto {
     @IsString()
     @IsNotEmpty()
     name: string;

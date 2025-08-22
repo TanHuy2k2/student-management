@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { AccountsModule } from './modules/accounts/accounts.module';
+import { AccountModule } from './modules/accounts/accounts.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { typeOrmConfig } from './database/typeorm.config';
@@ -10,11 +10,13 @@ import { APP_GUARD } from '@nestjs/core';
 import { AuthGuard } from './commons/guards/auth.guard';
 import { RolesGuard } from './commons/guards/roles.guard';
 import { JwtModule } from '@nestjs/jwt';
+import { StudentModule } from './modules/student/student.module';
 
 @Module({
   imports: [
-    AccountsModule,
+    AccountModule,
     AuthModule,
+    StudentModule,
     ConfigModule.forRoot({ isGlobal: true }),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
