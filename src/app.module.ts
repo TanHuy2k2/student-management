@@ -11,12 +11,14 @@ import { AuthGuard } from './commons/guards/auth.guard';
 import { RolesGuard } from './commons/guards/roles.guard';
 import { JwtModule } from '@nestjs/jwt';
 import { StudentModule } from './modules/student/student.module';
+import { TeacherModule } from './modules/teacher/teacher.module';
 
 @Module({
   imports: [
     AccountModule,
     AuthModule,
     StudentModule,
+    TeacherModule,
     ConfigModule.forRoot({ isGlobal: true }),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],

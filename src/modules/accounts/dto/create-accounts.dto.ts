@@ -22,7 +22,7 @@ export class CreateAccountDto {
 
     @IsEnum(Role)
     @IsOptional()
-    roles: Role;
+    role: Role;
 
     @IsNumber()
     @IsOptional()
