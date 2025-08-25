@@ -2,6 +2,7 @@ import { Entity, Column, PrimaryGeneratedColumn, OneToOne } from 'typeorm';
 import { AbstractEntity } from './base.entity';
 import { Role } from '../../commons/enums/role.enum';
 import { StudentEntity } from './student.entity';
+import { TeacherEntity } from './teacher.entity';
 
 @Entity({ name: 'accounts' })
 export class AccountEntity extends AbstractEntity {
@@ -25,4 +26,7 @@ export class AccountEntity extends AbstractEntity {
 
     @OneToOne(() => StudentEntity, (student) => student.account)
     student: StudentEntity;
+
+    @OneToOne(() => TeacherEntity, (teacher) => teacher.account)
+    teacher: TeacherEntity;
 }
