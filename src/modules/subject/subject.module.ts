@@ -10,5 +10,6 @@ import { SubjectEntity } from 'src/database/entities/subject.entity';
     ],
     controllers: [SubjectController],
     providers: [SubjectService],
+    exports: [TypeOrmModule, SubjectService]
 })
 export class SubjectModule { }

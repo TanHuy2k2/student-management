@@ -20,8 +20,13 @@ export class StudentService {
         return 'Hello student!';
     }
 
-    async findOne(account): Promise<StudentInterface | null> {
+    async findByAccount(account): Promise<StudentInterface | null> {
         const student = await this.studentRepository.findOneBy({ account });
+        return student;
+    }
+
+    async findById(id: number): Promise<StudentInterface | null> {
+        const student = await this.studentRepository.findOneBy({ id });
         return student;
     }
 
@@ -41,7 +46,7 @@ export class StudentService {
 
     async update(accountId, data: UpdateStudentDto) {
         try {
-            const studentById = await this.findOne({ id: accountId } as AccountEntity);
+            const studentById = await this.findByAccount({ id: accountId } as AccountEntity);
             if (!studentById) {
                 throw new NotFoundException(`Student with account id=${accountId} not found`);
             }
@@ -60,7 +65,7 @@ export class StudentService {
 
     async delete(accountId) {
         const account = { id: accountId } as AccountEntity;
-        const studentById = await this.findOne(account);
+        const studentById = await this.findByAccount(account);
         if (!studentById) {
             throw new NotFoundException(`Student with account id=${accountId} not found`);
         }
