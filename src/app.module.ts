@@ -15,6 +15,7 @@ import { TeacherModule } from './modules/teacher/teacher.module';
 import { SubjectModule } from './modules/subject/subject.module';
 import { ScoreModule } from './modules/score/score.module';
 import { RoomModule } from './modules/room/room.module';
+import { ScheduleModule } from './modules/schedule/schedule.module';
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import { RoomModule } from './modules/room/room.module';
     SubjectModule,
     ScoreModule,
     RoomModule,
+    ScheduleModule,
     ConfigModule.forRoot({ isGlobal: true }),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],

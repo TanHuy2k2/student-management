@@ -26,6 +26,10 @@ export class TeacherService {
         return teacher;
     }
 
+    async findById(id: number): Promise<TeacherInterface | null> {
+        return await this.teacherRepository.findOneBy({ id });
+    }
+
     async register(data: CreateTeacherDto) {
         try {
             const account = await this.accountService.create(data);
