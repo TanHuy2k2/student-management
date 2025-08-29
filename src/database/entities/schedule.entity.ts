@@ -3,11 +3,17 @@ import { AbstractEntity } from './base.entity';
 import { SubjectEntity } from './subject.entity';
 import { TeacherEntity } from './teacher.entity';
 import { RoomEntity } from './room.entity';
+import { DayOfWeek } from '../../commons/enums/day.enum';
+import { StudentEntity } from './student.entity';
 
 @Entity({ name: 'schedules' })
 export class ScheduleEntity extends AbstractEntity {
     @PrimaryGeneratedColumn()
     id: number;
+
+    @ManyToOne(() => StudentEntity, (student) => student.schedule, { onDelete: 'CASCADE' })
+    @JoinColumn({ name: 'student_id' })
+    student: StudentEntity;
 
     @ManyToOne(() => SubjectEntity, (subject) => subject.schedule, { onDelete: 'CASCADE' })
     @JoinColumn({ name: 'subject_id' })
@@ -21,9 +27,12 @@ export class ScheduleEntity extends AbstractEntity {
     @JoinColumn({ name: 'room_id' })
     room: RoomEntity;
 
-    @Column({ name: 'start_time', type: 'datetime' })
-    startTime: Date
+    @Column({ name: 'day_of_week', type: 'enum', enum: DayOfWeek })
+    dayOfWeek: DayOfWeek;
 
-    @Column({ name: 'end_time', type: 'datetime' })
-    endTime: Date
+    @Column({ name: 'start_time', type: 'time' })
+    startTime: string;
+
+    @Column({ name: 'end_time', type: 'time' })
+    endTime: string;
 }

@@ -12,5 +12,6 @@ import { AccountModule } from '../accounts/accounts.module';
     ],
     controllers: [TeacherController],
     providers: [TeacherService],
+    exports: [TypeOrmModule, TeacherService]
 })
 export class TeacherModule { }

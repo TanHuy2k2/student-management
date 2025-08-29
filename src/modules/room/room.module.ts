@@ -12,5 +12,6 @@ import { RoomEntity } from 'src/database/entities/room.entity';
     ],
     controllers: [RoomController],
     providers: [RoomService],
+    exports: [TypeOrmModule, RoomService]
 })
 export class RoomModule { }

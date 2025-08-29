@@ -18,11 +18,10 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
-    "typeorm": "typeorm-ts-node-commonjs",
-    "migration:generate": "npm run typeorm -- migration:generate src/database/migrations/NewMigration -d src/database/datasource.ts",
-    "migration:create": "npm run typeorm -- migration:create src/database/migrations/NewMigration",
-    "migration:run": "npm run typeorm -- migration:run -d src/database/datasource.ts",
-    "migration:revert": "npm run typeorm -- migration:revert -d src/database/datasource.ts"
+    "migrate:generate": "ts-node ./node_modules/typeorm/cli.js migration:generate -d src/database/datasource.ts",
+    "migrate:create": "ts-node ./node_modules/typeorm/cli.js migration:create",
+    "migrate:up": "ts-node ./node_modules/typeorm/cli.js migration:run -d src/database/datasource.ts",
+    "migrate:down": "ts-node ./node_modules/typeorm/cli.js migration:revert -d src/database/datasource.ts"
   },
   "dependencies": {
     "@nestjs-modules/ioredis": "^2.0.2",

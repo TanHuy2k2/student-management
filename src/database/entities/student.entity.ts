@@ -2,6 +2,7 @@ import { Entity, PrimaryGeneratedColumn, OneToOne, JoinColumn, OneToMany } from 
 import { AbstractEntity } from './base.entity';
 import { AccountEntity } from './account.entity';
 import { ScoreEntity } from './score.entity';
+import { ScheduleEntity } from './schedule.entity';
 
 @Entity({ name: 'students' })
 export class StudentEntity extends AbstractEntity {
@@ -14,4 +15,7 @@ export class StudentEntity extends AbstractEntity {
 
     @OneToMany(() => ScoreEntity, (score) => score.student)
     score: ScoreEntity[];
+
+    @OneToMany(() => ScheduleEntity, (schedule) => schedule.student)
+    schedule: ScheduleEntity[];
 }
